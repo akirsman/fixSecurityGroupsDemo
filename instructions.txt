@@ -1,6 +1,8 @@
-﻿crear role con lambda execution, cloudwatch y ec2
-crear lambda y poner print(event)
-crear event contra ec2 y catch de CreateSecurityGroup, DeleteTags:
+﻿Parte 1 - Diseño manual de la solución
+
+Crear role con lambda execution, cloudwatch y ec2
+Crear lambda y poner print(event)
+Crear event contra ec2 y catch de CreateSecurityGroup, DeleteTags:
 
 {
   "source": [
@@ -20,8 +22,8 @@ crear event contra ec2 y catch de CreateSecurityGroup, DeleteTags:
   }
 }
 
-probar con un security group y capturar ambos events.
-modificar Lambda:
+Probar con un security group y capturar ambos events.
+Modificar Lambda:
 
 import json
 import boto3
@@ -42,13 +44,11 @@ def lambda_handler(event, context):
 
 test!
 
-------------
-
-deployment with CDK
+Parte 2 - Armado de artefacto de despliegue con CDK:
 
 cdk init app --language csharp
-add nuget packages (iam, lambda, cloudwatch)
-código:
+Add nuget packages (iam, lambda, cloudwatch)
+Agregar código:
 
             // role
             var role = new Role(this, "fixsecuritygroupslambdarole", new RoleProps
@@ -102,3 +102,7 @@ def lambda_handler(event, context):
                 },
             });
             rule.AddTarget(new LambdaFunction(lambda));
+
+dotnet build .\src\ 
+cdk synth -o "$env:TEMP\template"
+aws cloudformation deploy --template-file "$env:TEMP\template\DeploymentStack.template.json" --stack-name FixSecurityGroups --capabilities CAPABILITY_NAMED_IAM
