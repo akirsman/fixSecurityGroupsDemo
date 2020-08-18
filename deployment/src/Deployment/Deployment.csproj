@@ -12,7 +12,6 @@
   <ItemGroup>
     <!-- CDK Construct Library dependencies -->
     <PackageReference Include="Amazon.CDK" Version="1.58.0" />
-    <PackageReference Include="Amazon.CDK.AWS.CloudWatch" Version="1.58.0" />
     <PackageReference Include="Amazon.CDK.AWS.Events.Targets" Version="1.58.0" />
     <PackageReference Include="Amazon.CDK.AWS.IAM" Version="1.58.0" />
     <PackageReference Include="Amazon.CDK.AWS.Lambda" Version="1.58.0" />
